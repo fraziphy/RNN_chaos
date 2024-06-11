@@ -132,7 +132,7 @@ class RNN:
 
 
 
-def Edges(size, p):
+def Edges(size, p, RNG):
     """
     Generates a binary adjacency matrix for a network without self-loops,
     where each connection has a probability of 1-p of being present.
@@ -140,6 +140,7 @@ def Edges(size, p):
     Args:
     - size: Number of nodes in the network.
     - p: Probability of a connection existing between any pair of nodes.
+    - RNG: Random number generator
     
     Returns:
     - A boolean matrix indicating the presence of connections.
@@ -148,7 +149,7 @@ def Edges(size, p):
     zero_conn = np.eye(size).astype(bool)
     
     # Assign connectivities a probability of 1-p to zero
-    aux = np.random.random(size**2 - size)
+    aux = RNG.random(size**2 - size)
     zero_conn_aux = aux <= 1 - p
     
     zero_conn[~zero_conn] = zero_conn_aux
@@ -156,7 +157,7 @@ def Edges(size, p):
     return ~zero_conn
 
 
-def Connectivity_Strength(size, p, std):
+def Connectivity_Strength(size, p, std, RNG):
     """
     Constructs a weighted adjacency matrix for a network, where each connection
     has a weight drawn from a normal distribution centered around 0 with a standard
@@ -166,6 +167,7 @@ def Connectivity_Strength(size, p, std):
     - size: Number of nodes in the network.
     - p: Probability of a connection existing between any pair of nodes.
     - std: Standard deviation of the normal distribution for connection weights.
+    - RNG: Random number generator
     
     Returns:
     - A float matrix representing the connectivity strengths between nodes.
@@ -173,11 +175,11 @@ def Connectivity_Strength(size, p, std):
     conn = np.zeros((size, size), dtype=float)
     
     # Construct a boolean matrix representing the network's connectivity
-    edges = Edges(size, p)
+    edges = Edges(size, p, RNG)
     n_edges = len(edges[edges])
     
     # Generate connectivity strengths from a normal distribution with a mean of 0 and a standard deviation of 'std'
-    aux = np.random.normal(0, std, n_edges)
+    aux = RNG.normal(0, std, n_edges)
     conn[edges] = aux - aux.mean()
     
     return conn
