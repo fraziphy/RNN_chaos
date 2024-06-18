@@ -11,6 +11,14 @@ PIDS=""
 # Define session numbers as a space-separated list. These sessions will be iterated over in the following loop.
 SESSIONS="1 2 3 4 5"
 
+echo
+echo "#############################"
+echo "#############################"
+echo "Parallel Simulations"
+echo "#############################"
+echo "#############################"
+echo
+
 # Loop through each session number defined above.
 for i in ${SESSIONS}; do
     # Export the current session number as an environment variable.
@@ -35,10 +43,6 @@ for PID in ${PIDS}; do
     fi
 done
 
-# Run another Python script for data curation in the background, capturing its PID similarly to before.
-python3 ./python_scripts/datacuration.py & PID=$!
-
-# Process information about the newly started Python script.
 echo
 echo "#############################"
 echo "#############################"
@@ -46,14 +50,17 @@ echo "Data Curation"
 echo "#############################"
 echo "#############################"
 echo
+
+# Run another Python script for data curation in the background, capturing its PID similarly to before.
+python3 ./python_scripts/datacuration.py & PID=$!
+
+# Process information about the newly started Python script.
 process_info "$PID"
 
 
 # Wait for the data curation script to complete.
 wait "$PID"
 
-# Finally, run a Python script to plot a final figure in the background, and process its information.
-python3 ./python_scripts/plot_final_figure.py & PID=$!
 echo
 echo "#############################"
 echo "#############################"
@@ -61,4 +68,7 @@ echo "Plot Figure"
 echo "#############################"
 echo "#############################"
 echo
+
+# Finally, run a Python script to plot a final figure in the background, and process its information.
+python3 ./python_scripts/plot_final_figure.py & PID=$!
 process_info "$PID"

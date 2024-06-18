@@ -7,9 +7,6 @@ import synaptic_upscaling_chaos_module as SUCM
 # Import the pickle module for serializing and deserializing Python objects
 import pickle
 
-# Import the time module for time-related functions
-import time
-
 # Import the MPI module for parallel computing
 from mpi4py import MPI
 
