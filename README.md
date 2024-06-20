@@ -7,7 +7,8 @@ This GitHub repository contains scripts designed to explore the impact of synapt
 ```
 heterogeneous_synaptic_homeostasis
 ├── data
-│   └── data_curation.pickle
+│   └── data_curation.zip
+│       └── data_curation.pickle
 ├── figures
 │   └── results.pdf
 ├── python_scripts
@@ -132,7 +133,7 @@ $ mpirun -np 8 --oversubscribe python3 ./python_scripts/test.py
 ------------------------------------------------------------------------------------------------------------
 
 ### Description of data
-This directory includes a python dictionary in the format of pickle containing processed data (_data_curation.pickle_).
+This directory includes a zip file containing the python dictionary of the processed data in the format of pickle (_data_curation.pickle_).
 
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
